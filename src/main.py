@@ -204,6 +204,19 @@ def get_glitch(hits, roll):
 
 
 if __name__ == "__main__":
+
+    def more():
+        ans = False
+        while not ans:
+            i = input()
+            if i.lower() == 'y':
+                ret = True
+                ans = True
+            elif i.lower() == 'n':
+                ret = False
+                ans = True
+        return ret
+
     # Known Spells
     analyze_truth = Formula('Analyze Truth', 2)
     armor = Formula('Armor', 2)
@@ -233,6 +246,8 @@ if __name__ == "__main__":
     for p in prepped:
         p.show_work()
         print('------')
+        if not more():
+            break
 
     print('Prep minutes: {}'.format(sum([x.force for x in prepped])))
     print('Total damage:\nStun {} Physical {}'.format(
