@@ -240,11 +240,21 @@ if __name__ == "__main__":
         armor.prepare(pink, 3, Trigger.Command),
     ]
 
+    p2 = [
+        clairvoyance.prepare(pink, 4, Trigger.Command),
+        analyze_truth.prepare(pink, 2, Trigger.Command),
+    ]
 
-    prepped = p1
+    p3 = [
+        clairvoyance.prepare(pink, 4, Trigger.Command),
+    ]
+
+
+    prepped = []
     print('------')
-    for p in prepped:
+    for p in p1:
         p.show_work()
+        prepped.append(p)
         print('------')
         if not more():
             break
@@ -253,3 +263,4 @@ if __name__ == "__main__":
     print('Total damage:\nStun {} Physical {}'.format(
         sum([x.damage_stun for x in prepped]),
         sum([x.damage_physical for x in prepped])))
+    print('\n'.join([str(x) for x in prepped]))
