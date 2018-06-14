@@ -109,15 +109,17 @@ class Preparation(object):
 class Formula(object):
 
 
-    def __init__(self, name, dv):
+    def __init__(self, name, dv, bonus=0, link=None):
         self.name = name
         self.dv = dv
+        self.link = link
+        self.bonus = bonus
 
 
     def prepare(self, char, force, trigger):
         # opposed test
         info = {}
-        p_results = dice.roll('{}d6s'.format(char.Alchemy))
+        p_results = dice.roll('{}d6s'.format(char.Alchemy + self.bonus))
         p_results.reverse()
         p_hits = get_hits(p_results)
         is_limited = False
@@ -218,12 +220,12 @@ if __name__ == "__main__":
         return ret
 
     # Known Spells
-    analyze_truth = Formula('Analyze Truth', 2)
+    analyze_truth = Formula('Analyze Truth', 2, bonus=2)
     armor = Formula('Armor', 2)
-    clairvoyance = Formula('Clairvoyance', 3)
-    detect_individual = Formula('Detect Individual', 3)
+    clairvoyance = Formula('Clairvoyance', 3, bonus=2)
+    detect_individual = Formula('Detect Individual', 3, bonus=2)
     flamethrower = Formula('Flamethrower', 3)
-    heal = Formula('Heal', 4)
+    heal = Formula('Heal', 4, bonus=2)
     physical_barrier = Formula('Physical Barrier', 1)
     stealth = Formula('Stealth', 2)
 
@@ -246,13 +248,46 @@ if __name__ == "__main__":
     ]
 
     p3 = [
-        clairvoyance.prepare(pink, 4, Trigger.Command),
+        clairvoyance.prepare(pink, 5, Trigger.Command),
     ]
 
+    p4 = [
+        heal.prepare(pink, 5, Trigger.Command),
+    ]
+
+    p5 = [
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        heal.prepare(pink, 5, Trigger.Command),
+        armor.prepare(pink, 3, Trigger.Command),
+        flamethrower.prepare(pink, 4, Trigger.Command)
+    ]
+
+    p6 = [
+        stealth.prepare(pink, 3, Trigger.Contact),
+        stealth.prepare(pink, 3, Trigger.Contact),
+        stealth.prepare(pink, 3, Trigger.Contact),
+        stealth.prepare(pink, 3, Trigger.Contact),
+        stealth.prepare(pink, 3, Trigger.Contact),
+    ]
+
+    p7 = [
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        flamethrower.prepare(pink, 4, Trigger.Command)
+
+    ]
+
+    p8 = [
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        flamethrower.prepare(pink, 4, Trigger.Command),
+        armor.prepare(pink, 3, Trigger.Command)
+    ]
 
     prepped = []
     print('------')
-    for p in p1:
+    for p in p8:
         p.show_work()
         prepped.append(p)
         print('------')
