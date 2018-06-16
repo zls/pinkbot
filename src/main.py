@@ -118,7 +118,6 @@ class Formula(object):
 
     def prepare(self, char, force, trigger):
         # opposed test
-        info = {}
         p_results = dice.roll('{}d6s'.format(char.Alchemy + self.bonus))
         p_results.reverse()
         p_hits = get_hits(p_results)
